@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Market Analysis</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div id="header"><h1>Stock Market Analysis</h1></div>
+    <!-- Chart Section -->
+    <div class="container">
+      <div id="chart-section">
+        <h2>Stock Chart</h2>
+        <div class="chart-container">
+          <div id="lineChart"></div>
+        </div>
+        <div class="chartButtons">
+          <button onclick="updateChartRange('AAPL', '1mo')">1 Month</button>
+          <button onclick="updateChartRange('AAPL', '3mo')">3 Month</button>
+          <button onclick="updateChartRange('AAPL', '1y')">1 Year</button>
+          <button onclick="updateChartRange('AAPL', '5y')">5 Years</button>
+        </div>
+      </div>
+      <!-- List Section -->
+      <div id="list-section">
+        <ul id="stock-list"></ul>
+      </div>
+    </div>
+    <!-- Detail Section -->
+    <h2>Stock Details</h2>
+    <div class="stock-details">
+      <p class="stock-name-summary"></p>
+      <p class="stock-profit-summary"></p>
+      <p class="bookValue-summary"></p>
+    </div>
+    <p class="summary"></p>
+    <!-- <script src="chart.js"></script> -->
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

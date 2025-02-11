@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Line Chart with Hover Line and Tooltip</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    .chart-container {
+      width: 80%;
+      max-width: 700px;
+      margin: auto;
+      background-color: #0A0333;
+      padding: 20px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chart-container">
+    <div id="lineChart"></div>
+  </div>
+
+  <script>
+    // Sample data for the line chart
+    const dates = ['2023-01-01', '2023-02-01', '2023-03-01', '2023-04-01', '2023-05-01', '2023-06-01'];
+    const prices = [150, 170, 160, 175, 180, 190];
+
+    // Plotly configuration for the line chart
+    const trace = {
+      x: dates,
+      y: prices,
+      mode: 'lines',
+      line: { color: '#00FF00' }, // Green line color
+      hoverinfo: 'x+y', // Display both x and y values in the tooltip
+      hoverlabel: { bgcolor: "#1E002E", font: { color: "#FFF" } } // Tooltip style
+    };
+
+    const layout = {
+      title: {
+        text: 'Stock Price over Time',
+        font: { color: "#FFFFFF" }
+      },
+      xaxis: {
+        showticklabels: false, // Hides the date labels on the x-axis
+        title: 'Date',
+        tickformat: '%m/%d/%Y',
+        showgrid: false,
+        color: "#FFF"
+      },
+      yaxis: {
+        title: 'Price (USD)',
+        showgrid: false,
+        color: "#FFF"
+      },
+      plot_bgcolor: '#0A0333',  // Background color for the chart
+      paper_bgcolor: '#0A0333', // Background color for the whole plot area
+      showlegend: false,
+      hovermode: 'x', // Hover along the x-axis to show tooltip
+    };
+
+    // Render the chart
+    Plotly.newPlot('lineChart', [trace], layout, { responsive: true });
+
+    // Event listener to add a vertical line on hover
+    const chart = document.getElementById('lineChart');
+    chart.on('plotly_hover', function(event) {
+      const xValue = event.points[0].x;
+
+      // Add a vertical line at the x-value of the hovered point
+      Plotly.relayout(chart, {
+        shapes: [{
+          type: 'line',
+          x0: xValue,
+          y0: 0,
+          x1: xValue,
+          y1: 1,
+          xref: 'x',
+          yref: 'paper',
+          line: {
+            color: '#FFFFFF',
+            width: 1,
+            dash: 'dot'
+          }
+        }]
+      });
+    });
+
+    // Event listener to remove the vertical line when not hovering
+    chart.on('plotly_unhover', function() {
+      // Clear the shapes (vertical line)
+      Plotly.relayout(chart, { shapes: [] });
+    });
+  </script>
+</body>
+</html>
